@@ -1,5 +1,7 @@
 FROM frolvlad/alpine-rust as builder
 
+RUN apk add --no-cache openssl-dev
+
 # create a new empty shell project
 WORKDIR /chatgpt-telegram-bot
 
@@ -25,7 +27,9 @@ RUN strip target/release/chatgpt-telegram-bot
 # start building the final image
 FROM alpine:3.17
 
+RUN apk add --no-cache bash libssl3 libgcc
+
 COPY --from=builder /chatgpt-telegram-bot/target/release/chatgpt-telegram-bot .
 COPY log_config.yaml .
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["/chatgpt-telegram-bot"]
