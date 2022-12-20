@@ -96,7 +96,8 @@ async fn main() -> Result<()> {
                                 'n',
                             ])
                             .trim_end_matches('"')
-                            .replace("\\n", "\n"),
+                            .replace("\\n", "\n")
+                            .replace("\\\"", "\""),
                     ),
                     Err(_) => {
                         String::from("ChatGPT API currently is not working. Try again later...")
